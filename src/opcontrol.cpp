@@ -11,7 +11,8 @@ int bbutton[2];
 int benable = 0;
 void drive()
 { 
-  if(abs(Controller1.Axis4.value()) > margin)
+  //set margins so that robot does not respond to sensitive stick motion of controller
+  if(abs(Controller1.Axis4.value()) > margin) 
   {
     turnspeed = Controller1.Axis4.value();
   }
@@ -27,7 +28,7 @@ void drive()
   {
     frontspeed = 0;
   }
-  if(benable == 1)
+  if(benable == 1) //slow robot down
   {
     leftspeed = 0.5 * frontspeed + 0.45 * turnspeed;
     rightspeed = 0.5 * frontspeed - 0.7 * turnspeed;
@@ -40,7 +41,7 @@ void drive()
   leftdrive.spin(fwd, leftspeed, vex::percentUnits::pct);
   rightdrive.spin(fwd, rightspeed, vex::percentUnits::pct);
 }
-void ycontrol()
+void ycontrol() //controls the front back movement of the arm, on the y axis
 {
   up = 0;
   down = 0;
@@ -70,7 +71,7 @@ void ycontrol()
     yright.stop();
   }
 }
-void xcontrol()
+void xcontrol() //controls the horizontal movement of arm, on the x axis
 {
   if(benable == 1)
   {
@@ -120,7 +121,7 @@ void stickmove()
     }
     xoriginal = xmotor.position(deg);
   } 
-  if(ymode == 1 && abs(Controller1.Axis2.value()) < 2)
+  if(ymode == 1 && abs(Controller1.Axis2.value()) < 2) //stops the arm
   {
     if(ymotor.position(deg) < 430)
     {
@@ -140,7 +141,7 @@ void stickmove()
   if(ymode == 2 && abs(Controller1.Axis2.value()) < 2)
   {
     down = 1;
-    if(ymotor.position(deg) > 190)
+    if(ymotor.position(deg) > 190) //prevents arm from going over threshold on y axis
     {
     ymotor.spin(reverse, yspeed, vex::percentUnits::pct);
     yright.spin(reverse, yspeed, vex::percentUnits::pct);
@@ -157,7 +158,7 @@ void stickmove()
   }
   xtarget = xoriginal + xoffset;
   ytarget = yoriginal + yoffset;
-  if(xmode == 3 && ymode == 3)
+  if(xmode == 3 && ymode == 3) //a pseudo PID control, makes the arm move to target position with lag
   {
     while(fabs(ymotor.position(degrees) - ytarget) > 2 || fabs(xmotor.position(degrees)-xtarget) > 2)
     {
@@ -168,7 +169,7 @@ void stickmove()
     }  
   }
 }
-void zcontrol()
+void zcontrol() //controls up and down of arm
 {
   l1 = 0;
   l2 = 0;
@@ -205,13 +206,13 @@ int zcontrol1()
   }
 }
 
-void intakecontrol()
+void intakecontrol() 
 {
-  if(Controller1.ButtonR1.pressing())//down
+  if(Controller1.ButtonR1.pressing())//down, release the crayon
   {
     intake.spin(reverse, 60, vex::percentUnits::pct);
   }
-  else if(Controller1.ButtonR2.pressing())//up
+  else if(Controller1.ButtonR2.pressing())//up, picks up the crayon
   {
     intake.spin(forward, 50, vex::percentUnits::pct);
   }
@@ -221,7 +222,7 @@ void intakecontrol()
   }
 }
 
-int intakecontrol1()
+int intakecontrol1() //detects whether to pick up or release crayon
 {
   if(Controller1.ButtonR1.pressing())//down
   {
@@ -260,7 +261,7 @@ void opcontrol()
     */
 }
 
-void bcontrol()
+void bcontrol() //alternative controls, changes arm up/down and intakes
 {
   opcontrol();
   zpressed = zcontrol1();
@@ -287,7 +288,7 @@ void bcontrol()
     }
     else if(zpressed == 0 && intakepressed == 0)
     {
-      btime = bpresstime % 400;
+      btime = bpresstime % 400; //helps with picking up crayon, moving arm up and down while intaking
       if(btime < 200)
       {
       zmotor.spin(reverse, 40, pct);

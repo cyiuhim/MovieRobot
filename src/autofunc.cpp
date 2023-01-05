@@ -6,7 +6,7 @@ double speedconst = 2.5;
 double pi = 3.14159265358979;
 int moveno;
 
-void move(double xcoor, double ycoor, double movetime)
+void move(double xcoor, double ycoor, double movetime) //move to a point on coordinates with the arm
 {
   originalx = xmotor.position(deg);
   originaly = ymotor.position(deg);
@@ -35,6 +35,7 @@ void pendown(double time)
   intake.stop();
 }
 void drawarc(int direction, int startdeg, int enddeg, double xcentre, double ycentre, int increment, double radius)
+//draws an arc, by plotting tightly packed points on the arc, used for letters C, O and D
 //1 = counterclockwise, 2 = clockwise
 { 
   switch(direction)

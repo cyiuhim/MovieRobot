@@ -16,7 +16,7 @@ void init()
   xmotor.setStopping(hold);
   Brain.Screen.clearScreen();
   Brain.Screen.drawImageFromBuffer(cody, 0, 0, 334080); // 334080 = 480 * 232 * 3(to bytes)
-  ymotor.startRotateTo(190, deg, 40, rpm);
+  ymotor.startRotateTo(190, deg, 40, rpm); //reset position
   yright.rotateTo(190, deg, 40, rpm);
   yoriginal = 190;
 }

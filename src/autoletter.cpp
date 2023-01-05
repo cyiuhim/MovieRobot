@@ -1,3 +1,6 @@
+//graphs for the writing of the letter on cody graph.png
+//graph also on https://www.desmos.com/calculator/sy2qg4s3ms
+
 #include "vex.h"
 #include "auto.h"
 

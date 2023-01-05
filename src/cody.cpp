@@ -1,4 +1,4 @@
-//this file prints out the image on the screen of the brains
+//this file prints out the image on the screen of the brain
 
 #include "vex.h"
 #include <stdint.h>
